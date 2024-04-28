@@ -1,0 +1,25 @@
+{
+  "name": "sf-md-verify",
+  "version": "0.0.4",
+  "description": "A node module used to verify salesforce metadata for best practices.",
+  "main": "./bin/index.js",
+  "bin": {
+    "sf-md-verify": "./bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IsuruHerath/sf-md-verify.git"
+  },
+  "keywords": [
+    "Salesforce",
+    "Metadata",
+    "Verify",
+    "Best Practices"
+  ],
+  "author": "Isuru Herath",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IsuruHerath/sf-md-verify/issues"
+  },
+  "homepage": "https://github.com/IsuruHerath/sf-md-verify#readme"
+}
