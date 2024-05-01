@@ -1,20 +1,34 @@
 #!/usr/bin/env node
-
 const handleFeature = require('./features')
-const printHelp = require('./help')
 
-const args = process.argv.slice(2);
-
-function isArgumentsNotAvailable(args) {
-    return args.length === 0;
+const execute = (args) => {
+    handleFeature(args._[0], args);
 }
 
-function isAskingForHelp(arg) {
-    return arg === '--help';
-}
-
-if (isArgumentsNotAvailable(args) || isAskingForHelp(args[0])) {
-    printHelp();
-} else {
-    handleFeature(args[0]);
-}
+require('yargs')
+.scriptName("sf-md-verify")
+.usage('$0 <feature> [args]')
+.command('fields:custom [directory] [fieldsToSkip]', 'Verify custom fields', (yargs) => {
+    yargs.positional('directory', {
+        type: 'string',
+        describe: 'the path to metadata directory'
+    }),
+    yargs.positional('fieldsToSkip', {
+        type: 'array',
+        default: [],
+        describe: 'An array of fields that should not be verified'
+    })
+}, execute)
+.command('fields [directory] [fieldsToSkip]', 'Verify custom fields', (yargs) => {
+    yargs.positional('directory', {
+        type: 'string',
+        describe: 'the path to metadata directory'
+    }),
+    yargs.positional('fieldsToSkip', {
+        type: 'array',
+        default: [],
+        describe: 'An array of fields that should not be verified'
+    })
+}, execute)
+.help()
+.argv;

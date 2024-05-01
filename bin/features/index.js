@@ -1,15 +1,22 @@
-const printHelp = require('../help')
+const FieldVerifier = require('./fields/FieldVerifier');
+const CustomFieldVerifier = require('./fields/custom/customFieldVerifier');
 
-const verifyCustomFields = require('./fields-custom')
-
-module.exports = (feature) => {
+function getMetadataVerifier(feature, args) {
     switch (feature) {
+        case 'fields':
+            return new FieldVerifier(args);
         case 'fields:custom':
-            verifyCustomFields();
-            break;
+            return new CustomFieldVerifier(args);
         default:
-            console.error(`Unknown feature: ${feature}`);
-            printHelp();
-            break;
+            throw new Error(`Unknown feature: ${feature}`);
+    }
+}
+
+module.exports = (feature, args) => {
+    try {
+        const MetadataVerifier = getMetadataVerifier(feature, args);
+        MetadataVerifier.verify();
+    } catch(e) {
+        console.error(e);
     }
 }
