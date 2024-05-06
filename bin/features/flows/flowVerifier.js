@@ -1,18 +1,18 @@
-const MetadataVerifier = require('../metadataVerifier.js')
+const MetadataVerifier = require('./../metadataVerifier')
 
-class FieldVerifier extends MetadataVerifier {
+class FlowVerifier extends MetadataVerifier {
     constructor(args) {
-        super(args);
+        super(args)
     }
 
     _isMetadataTypeMatched(metadataFilePath) {
-        return metadataFilePath.endsWith('.field-meta.xml');
+        return metadataFilePath.endsWith('.flow-meta.xml');
     }
 
     _isMetadataVerified(metadataFilePath, metadataContent) {
         let isVerified = true;
         if(!this.#hasDescription(metadataContent)) {
-            console.error(`Field ${metadataFilePath} doesn't have a description`);
+            console.error(`Flow ${metadataFilePath} doesn't have a description`);
             isVerified = false;
         }
         
@@ -20,8 +20,8 @@ class FieldVerifier extends MetadataVerifier {
     }
 
     #hasDescription(metadataContent) {
-        return metadataContent?.CustomField?.description?.[0];
+        return metadataContent?.Flow?.description?.[0];
     }
 }
 
-module.exports = FieldVerifier
+module.exports = FlowVerifier
