@@ -7,7 +7,7 @@ const execute = (args) => {
 
 require('yargs')
 .scriptName("sf-md-verify")
-.usage('Usage: $0 <feature> [options]')
+.usage('Usage: $0 <command> [options]')
 .command('fields [options]', 'Verify all fields', (yargs) => {}, execute)
 .command('fields:custom [options]', 'Verify custom fields', (yargs) => {}, execute)
 .command('flows [options]', 'Verify flows', (yargs) => {}, execute)

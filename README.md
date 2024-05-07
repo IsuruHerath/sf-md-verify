@@ -1,48 +1,68 @@
 <h1 align="center">Salesfroce Metadata Verifier</h1>
 
 ## Description
+
 Salesfroce Metadata Verifier helps verify that point of click metadata is created following best practices.
 
 It provides a set of commands to verify different metadata types.
 
+## Feedback
+
+Please create a [new feature](https://github.com/IsuruHerath/sf-md-verify/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=) or a [new bug](https://github.com/IsuruHerath/sf-md-verify/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=)
+
 ## Usage
-To check the available features execute `sf-md-verify --help`. It will list down all the available features of the package with a short description.
-```
-sf-md-verify <feature> [args]
+
+```sh-session
+$ npm install -g sf-md-verify
+$ sf-md-verify COMMAND [options]
+running command...
+$ sf-md-verify --version
+1.0.4
+$ sf-md-verify --help
+Usage: sf-md-verify <feature> [options]
 
 Commands:
-  sf-md-verify fields:custom [directory] [fieldsToSkip]   Verify custom fields
-  sf-md-verify fields [directory] [fieldsToSkip]          Verify custom fields
+  sf-md-verify fields [options]          Verify all fields
+  sf-md-verify fields:custom [options]   Verify custom fields
+  sf-md-verify flows [options]           Verify flows
+  sf-md-verify permissionsets [options]  Verify permissionsets
+  sf-md-verify profiles [options]        Verify profiles
+  sf-md-verify record-types [options]    Verify record types
 
 Options:
-  --version  Show version number                       [boolean]
-  --help     Show help                                 [boolean]
-```
+      --version           Show version number                          [boolean]
+  -s, --skip-packages     Skip validation for metadata from packages   [boolean]
+  -d, --directory         The path for the metadata directory           [string]
+  -m, --metadata-to-skip  An array of metadata that should not be verified
+                                                                         [array]
+      --help              Show help                                    [boolean]
+$ sf-md-verify --help COMMAND
+sf-md-verify COMMAND [options]
 
-Inorder to drill down further, you can request help for each individual feature. Simply execute `sf-md-verify fields --help`. It will display help information of the requested feature.
-```
-sf-md-verify fields [directory] [fieldsToSkip]
-
-Verify custom fields
-
-Positionals:
-  directory     the path to metadata directory                          [string]
-  fieldsToSkip  An array of fields that should not be verified     [default: []]
+<command description>
 
 Options:
-  --version  Show version number                                       [boolean]
-  --help     Show help                                                 [boolean]
+      --version           Show version number                          [boolean]
+  -s, --skip-packages     Skip validation for metadata from packages   [boolean]
+  -d, --directory         The path for the metadata directory           [string]
+  -m, --metadata-to-skip  An array of metadata that should not be verified
+                                                                         [array]
+      --help              Show help                                    [boolean]
 ```
 
-## An Example Use Case
-To verify only the custom fields on a metadata package, execute following command by replacing argument values with your own values.
-### Command
+## Commands
+
+* `sf-md-verify fields --directory force-app`
+* `sf-md-verify fields:custom --directory force-app`
+* `sf-md-verify flows --directory force-app`
+* `sf-md-verify permissionsets --directory force-app`
+* `sf-md-verify profiles --directory force-app`
+* `sf-md-verify record-types --directory force-app`
+
+To skip verifing metadata from packages use `(-s|--skip-packages)` flags. To skip any specific metadata file, use (-m|--metadata-to-skip) flags followed by an array of metadata files.
+
 ```
-sf-md-verify fields:custom --directory force-app
-```
-### Output
-```
-Field system\main\default\objects\Account\fields\Name.field-meta.xml doesn't have a description
-Field system\main\default\objects\Account\fields\Primary_Contact__c.field-meta.xml doesn't have a description
-Field system\main\default\objects\Activity\fields\Custom_Status__c.field-meta.xml doesn't have a description
+sf-md-verify fields --directory force-app -s -m \
+  'force-app\main\default\objects\Account\fields\Name.field-meta.xml' \
+  'force-app\main\default\objects\Account\fields\Name.field-meta.xml'
 ```
